@@ -3,7 +3,6 @@ import "./App.css";
 import {BrowserRouter, Route, NavLink, Switch,} from "react-router-dom";
 import Logo from "./Vector.svg";
 
-
 const Register =() => (
   <div>Register</div>
 )
@@ -105,9 +104,6 @@ class App extends Component {
         </div>
 
         <div className="form-wrapper">
-        <div className="path">
-                <path to="./Login.js"><button type="submit">Login</button></path>
-              </div>
           <form onSubmit={this.handleSubmit} noValidate>
             <div className="firstName">
               <label htmlFor="firstName">Имя</label>
@@ -121,20 +117,6 @@ class App extends Component {
               />
               {formErrors.firstName.length > 0 && (
                 <span className="errorMessage">{formErrors.firstName}</span>
-              )}
-            </div>
-            <div className="lastName">
-              <label htmlFor="lastName">Фамилия</label>
-              <input
-                className={formErrors.lastName.length > 0 ? "error" : null}
-                placeholder="Фамилия"
-                type="text"
-                name="lastName"
-                noValidate
-                onChange={this.handleChange}
-              />
-              {formErrors.lastName.length > 0 && (
-                <span className="errorMessage">{formErrors.lastName}</span>
               )}
             </div>
             <div className="email">
@@ -178,4 +160,4 @@ class App extends Component {
 }
 
 
-export default App;
+export default Login;
