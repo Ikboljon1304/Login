@@ -1,9 +1,11 @@
 import React, { Component } from "react";
 import "./App.css";
 import Logo from "./Vector.svg";
+import Login from './Login';
+import { Route, Link } from 'react-router-dom';
 
-const Login =() => (
-  <div>Login</div>
+const Register =() => (
+  <div>Register</div>
 )
 
 const emailRegex = RegExp(
@@ -26,14 +28,19 @@ const formValid = ({ formErrors, ...rest }) => {
   return valid;
 };
 
-class Web extends Component {
+
+class Reg extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
+      firstName: null,
+      lastName: null,
       email: null,
       password: null,
       formErrors: {
+        firstName: "",
+        lastName: "",
         email: "",
         password: ""
       }
@@ -46,6 +53,8 @@ class Web extends Component {
     if (formValid(this.state)) {
       console.log(`
         --SUBMITTING--
+        First Name: ${this.state.firstName}
+        Last Name: ${this.state.lastName}
         Email: ${this.state.email}
         Password: ${this.state.password}
       `);
@@ -60,7 +69,14 @@ class Web extends Component {
     let formErrors = { ...this.state.formErrors };
 
     switch (name) {
-      
+      case "firstName":
+        formErrors.firstName =
+          value.length < 3 ? "Требуется минимум 3 символа" : "";
+        break;
+      case "lastName":
+        formErrors.lastName =
+          value.length < 3 ? "Требуется минимум 3 символа" : "";
+        break;
       case "email":
         formErrors.email = emailRegex.test(value)
           ? ""
@@ -77,32 +93,63 @@ class Web extends Component {
     this.setState({ formErrors, [name]: value }, () => console.log(this.state));
   };
 
-
-
-  
-
   render() {
+
     const { formErrors } = this.state;
     return (
+      
       <div className="wrapper">
+
+        <div className="App">
+          <Route exact path="/Login" component={Login} />
+        </div>
         <div className="image">
           <img src={Logo} />
         </div>
+
         <div className="form-wrapper">
-          <div className="container">
-            <button><a href="./Register">Регистратция</a></button>
-          </div>
-        <form onSubmit={this.handleSubmit} noValidate>
-          <div className="email">
-            <label htmlFor="email">Электронная Почта</label>
-            <input
-              className={formErrors.email.length > 0 ? "error" : null}
-              placeholder="Почта"
-              type="email"
-              name="email"
-              noValidate
-              onChange={this.handleChange}
-            />
+            <div className="container">
+                <button><a href="./Login">Войти</a></button>
+            </div>
+          <form onSubmit={this.handleSubmit} noValidate>
+            <div className="firstName">
+              <label htmlFor="firstName">Имя</label>
+              <input
+                className={formErrors.firstName.length > 0 ? "error" : null}
+                placeholder="Имя"
+                type="text"
+                name="firstName"
+                noValidate
+                onChange={this.handleChange}
+              />
+              {formErrors.firstName.length > 0 && (
+                <span className="errorMessage">{formErrors.firstName}</span>
+              )}
+            </div>
+            <div className="lastName">
+              <label htmlFor="lastName">Фамилия</label>
+              <input
+                className={formErrors.lastName.length > 0 ? "error" : null}
+                placeholder="Фамилия"
+                type="text"
+                name="lastName"
+                noValidate
+                onChange={this.handleChange}
+              />
+              {formErrors.lastName.length > 0 && (
+                <span className="errorMessage">{formErrors.lastName}</span>
+              )}
+            </div>
+            <div className="email">
+              <label htmlFor="email">Электронная Почта</label>
+              <input
+                className={formErrors.email.length > 0 ? "error" : null}
+                placeholder="Почта"
+                type="email"
+                name="email"
+                noValidate
+                onChange={this.handleChange}
+              />
               {formErrors.email.length > 0 && (
                 <span className="errorMessage">{formErrors.email}</span>
               )}
@@ -122,7 +169,7 @@ class Web extends Component {
               )}
             </div>
             <div className="createAccount">
-              <button type="submit">Войти</button>
+              <button type="submit">Регистратция</button>
             </div>
           </form>
         </div>
@@ -134,4 +181,4 @@ class Web extends Component {
 }
 
 
-export default Web;
+export default Reg;
