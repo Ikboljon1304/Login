@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import "./App.css";
 import Logo from "./Vector.svg";
+import { Route, Link } from 'react-router-dom';
+
 
 const Login =() => (
   <div>Login</div>
@@ -122,7 +124,7 @@ class Web extends Component {
               )}
             </div>
             <div className="createAccount">
-              <button type="submit">Войти</button>
+              <Link to={"/Register"}><button type="submit">Войти</button></Link>
             </div>
           </form>
         </div>

@@ -4,6 +4,7 @@ import Logo from "./Vector.svg";
 import Login from './Login';
 import { Route, Link } from 'react-router-dom';
 
+
 const Register =() => (
   <div>Register</div>
 )
@@ -32,6 +33,10 @@ const formValid = ({ formErrors, ...rest }) => {
 class Reg extends Component {
   constructor(props) {
     super(props);
+    this.state = { value: "User" };
+    
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
 
     this.state = {
       firstName: null,
@@ -61,7 +66,13 @@ class Reg extends Component {
     } else {
       console.error("FORM INVALID - DISPLAY ERROR MESSAGE");
     }
+
+    alert("You are in Adminstration page" + this.state.value);
+    e.preventDefault();
   };
+
+
+
 
   handleChange = e => {
     e.preventDefault();
@@ -89,7 +100,7 @@ class Reg extends Component {
       default:
         break;
     }
-
+    this.setState({ value: e.target.value });
     this.setState({ formErrors, [name]: value }, () => console.log(this.state));
   };
 
@@ -99,19 +110,14 @@ class Reg extends Component {
     return (
       
       <div className="wrapper">
-
-        <div className="App">
-          <Route exact path="/Login" component={Login} />
-        </div>
         <div className="image">
           <img src={Logo} />
         </div>
-
         <div className="form-wrapper">
             <div className="container">
                 <button><a href="./Login">Войти</a></button>
             </div>
-          <form onSubmit={this.handleSubmit} noValidate>
+          <form onSubmit={this.handleSubmit}>
             <div className="firstName">
               <label htmlFor="firstName">Имя</label>
               <input
@@ -119,7 +125,6 @@ class Reg extends Component {
                 placeholder="Имя"
                 type="text"
                 name="firstName"
-                noValidate
                 onChange={this.handleChange}
               />
               {formErrors.firstName.length > 0 && (
@@ -133,7 +138,6 @@ class Reg extends Component {
                 placeholder="Фамилия"
                 type="text"
                 name="lastName"
-                noValidate
                 onChange={this.handleChange}
               />
               {formErrors.lastName.length > 0 && (
@@ -147,7 +151,6 @@ class Reg extends Component {
                 placeholder="Почта"
                 type="email"
                 name="email"
-                noValidate
                 onChange={this.handleChange}
               />
               {formErrors.email.length > 0 && (
@@ -158,10 +161,9 @@ class Reg extends Component {
               <label htmlFor="password">Пароль</label>
               <input
                 className={formErrors.password.length > 0 ? "error" : null}
-                placeholder="Пароь"
+                placeholder="Пароль"
                 type="password"
                 name="password"
-                noValidate
                 onChange={this.handleChange}
               />
               {formErrors.password.length > 0 && (
@@ -169,7 +171,7 @@ class Reg extends Component {
               )}
             </div>
             <div className="createAccount">
-              <button type="submit">Регистратция</button>
+              <Link to={"/Login"}><button type="submit">Регистратция</button></Link>
             </div>
           </form>
         </div>
